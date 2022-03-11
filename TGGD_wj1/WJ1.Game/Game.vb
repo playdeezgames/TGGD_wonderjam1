@@ -1,8 +1,8 @@
 Imports WJ1.Data
 Public Module Game
-    Private BuildingXSize = 11
-    Private BuildingYSize = 11
-    Private BuildingZSize = 7
+    Private BuildingXSize As Long = 11
+    Private BuildingYSize As Long = 11
+    Private BuildingZSize As Long = 7
     Private Sub CreateBuilding()
         For z = 1 To BuildingZSize
 

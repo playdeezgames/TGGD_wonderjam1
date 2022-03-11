@@ -6,7 +6,7 @@ Module Program
         AnsiConsole.MarkupLine("[gray]Welcome to[/]")
         AnsiConsole.MarkupLine("[blue]A Game in VB.NET About Building, Decay, and Light[/]")
         AnsiConsole.MarkupLine("[gray]A Presentation of TheGrumpyGameDev[/]")
-        While MainMenu.Run()
+        While Run()
 
         End While
     End Sub
