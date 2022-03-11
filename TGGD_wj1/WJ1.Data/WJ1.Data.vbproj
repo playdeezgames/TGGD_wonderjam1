@@ -1,9 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>TGGD_wj1</RootNamespace>
-    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>WJ1.Data</RootNamespace>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <OptionStrict>On</OptionStrict>
   </PropertyGroup>
 
@@ -20,11 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Spectre.Console" Version="0.43.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\WJ1.Game\WJ1.Game.vbproj" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.3" />
   </ItemGroup>
 
 </Project>
