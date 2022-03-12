@@ -10,4 +10,14 @@ Public Class Location
             Return CType(LocationData.ReadLocationType(Id).Value, LocationType)
         End Get
     End Property
+    Function GetNeighbor(direction As Direction) As Location
+        Dim z = LocationData.ReadZ(Id).Value
+        Dim x = direction.NextX(LocationData.ReadX(Id).Value)
+        Dim y = direction.NextY(LocationData.ReadY(Id).Value)
+        Dim neighborId = LocationData.ReadForXYZ(x, y, z)
+        If neighborId.HasValue Then
+            Return New Location(neighborId.Value)
+        End If
+        Return Nothing
+    End Function
 End Class

@@ -25,8 +25,9 @@ Module InPlay
         While Not done
             Dim location = character.Location
             AnsiConsole.WriteLine()
-            AnsiConsole.MarkupLine($"CharacterId: {character.Id}")
-            AnsiConsole.MarkupLine($"Terrain: {location.LocationType.Name}")
+            AnsiConsole.MarkupLine($"Here: {location.LocationType.Name}")
+            Dim aheadLocation = character.GetNextLocation(MoveDirection.Ahead)
+            AnsiConsole.MarkupLine($"Ahead: {aheadLocation.LocationType.Name}")
             Select Case AnsiConsole.Prompt(New SelectionPrompt(Of String)() With {.Title = "What Next?"}.AddChoices("Menu"))
                 Case "Menu"
                     done = HandleGameMenu()

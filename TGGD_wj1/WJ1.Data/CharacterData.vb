@@ -6,19 +6,25 @@
             (
                 [CharacterId] INTEGER PRIMARY KEY AUTOINCREMENT,
                 [CharacterType] INT NOT NULL,
+                [Direction] INT NOT NULL,
                 [LocationId] INT NOT NULL
             );")
     End Sub
-    Function Create(characterType As Long, locationId As Long) As Long
+    Function Create(characterType As Long, locationId As Long, direction As Long) As Long
         Initialize()
         ExecuteNonQuery(
-            "INSERT INTO [Characters]([CharacterType],[LocationId]) VALUES(@CharacterType,@LocationId);",
+            "INSERT INTO [Characters]([CharacterType],[LocationId],[Direction]) VALUES(@CharacterType,@LocationId,@Direction);",
             MakeParameter("@CharacterType", characterType),
+            MakeParameter("@Direction", direction),
             MakeParameter("@LocationId", locationId))
         Return LastInsertRowId
     End Function
     Function ReadLocation(characterId As Long) As Long?
         Initialize()
         Return ExecuteScalar(Of Long)("SELECT [LocationId] FROM [Characters] WHERE [CharacterId]=@CharacterId;", MakeParameter("@CharacterId", characterId))
+    End Function
+    Function ReadDirection(characterId As Long) As Long?
+        Initialize()
+        Return ExecuteScalar(Of Long)("SELECT [Direction] FROM [Characters] WHERE [CharacterId]=@CharacterId;", MakeParameter("@CharacterId", characterId))
     End Function
 End Module

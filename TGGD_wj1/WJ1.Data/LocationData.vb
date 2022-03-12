@@ -44,4 +44,30 @@
             "SELECT [LocationType] FROM [Locations] WHERE [LocationId]=@LocationId;",
             MakeParameter("@LocationId", locationId))
     End Function
+    Function ReadX(locationId As Long) As Long?
+        Initialize()
+        Return ExecuteScalar(Of Long)(
+            "SELECT [X] FROM [Locations] WHERE [LocationId]=@LocationId;",
+            MakeParameter("@LocationId", locationId))
+    End Function
+    Function ReadY(locationId As Long) As Long?
+        Initialize()
+        Return ExecuteScalar(Of Long)(
+            "SELECT [Y] FROM [Locations] WHERE [LocationId]=@LocationId;",
+            MakeParameter("@LocationId", locationId))
+    End Function
+    Function ReadZ(locationId As Long) As Long?
+        Initialize()
+        Return ExecuteScalar(Of Long)(
+            "SELECT [Z] FROM [Locations] WHERE [LocationId]=@LocationId;",
+            MakeParameter("@LocationId", locationId))
+    End Function
+    Function ReadForXYZ(x As Long, y As Long, z As Long) As Long?
+        Initialize()
+        Return ExecuteScalar(Of Long)(
+            "SELECT [LocationId] FROM [Locations] WHERE [X]=@X AND [Y]=@Y AND [Z]=@Z;",
+            MakeParameter("@X", x),
+            MakeParameter("@Y", y),
+            MakeParameter("@Z", z))
+    End Function
 End Module
