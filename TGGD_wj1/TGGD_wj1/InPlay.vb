@@ -26,7 +26,7 @@ Module InPlay
             Dim location = character.Location
             AnsiConsole.WriteLine()
             AnsiConsole.MarkupLine($"CharacterId: {character.Id}")
-            AnsiConsole.MarkupLine($"LocationId: {location.Id}")
+            AnsiConsole.MarkupLine($"Terrain: {location.LocationType.Name}")
             Select Case AnsiConsole.Prompt(New SelectionPrompt(Of String)() With {.Title = "What Next?"}.AddChoices("Menu"))
                 Case "Menu"
                     done = HandleGameMenu()
