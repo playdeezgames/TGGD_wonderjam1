@@ -34,11 +34,16 @@ Public Module Store
     Function MakeParameter(name As String, value As Object) As SqliteParameter
         Return New SqliteParameter(name, value)
     End Function
-    Sub ExecuteNonQuery(sql As String)
-        Using command = CreateCommand(sql)
+    Sub ExecuteNonQuery(sql As String, ParamArray parameters() As SqliteParameter)
+        Using command = CreateCommand(sql, parameters)
             command.ExecuteNonQuery()
         End Using
     End Sub
+    Function ExecuteScalar(Of TResult As Structure)(query As String, ParamArray parameters() As SqliteParameter) As TResult?
+        Using command = CreateCommand(query, parameters)
+            Return ExecuteScalar(Of TResult)(command)
+        End Using
+    End Function
     ReadOnly Property LastInsertRowId() As Long
         Get
             Using command = connection.CreateCommand()

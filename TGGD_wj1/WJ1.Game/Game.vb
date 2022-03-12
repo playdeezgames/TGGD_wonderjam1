@@ -33,9 +33,15 @@ Public Module Game
             CreateFloor(z)
         Next
     End Sub
+    Private Sub CreatePlayerCharacter()
+        Dim locationId = RNG.FromList(LocationData.ReadForZAndLocationType(BuildingZSize, LocationType.Floor))
+        Dim characterId = CharacterData.Create(CharacterType.Player, locationId)
+        PlayerData.Write(characterId)
+    End Sub
     Sub Start()
         Store.Reset()
         CreateBuilding()
+        CreatePlayerCharacter()
     End Sub
     Sub Finish()
         Store.ShutDown()

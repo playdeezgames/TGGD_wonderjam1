@@ -14,9 +14,7 @@ Module MainMenu
             Case "Quit"
                 Return Not ConfirmQuit()
             Case Else
-                AnsiConsole.WriteLine()
-                AnsiConsole.MarkupLine("[red]Invalid Response.[/]")
-                Return True
+                Throw New NotImplementedException
         End Select
     End Function
 End Module
