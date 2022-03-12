@@ -2,7 +2,7 @@
     Friend Sub Initialize()
         LocationData.Initialize()
         ExecuteNonQuery(
-            "CREATE TABLE [Characters]
+            "CREATE TABLE IF NOT EXISTS [Characters]
             (
                 [CharacterId] INTEGER PRIMARY KEY AUTOINCREMENT,
                 [CharacterType] INT NOT NULL,
@@ -16,5 +16,9 @@
             MakeParameter("@CharacterType", characterType),
             MakeParameter("@LocationId", locationId))
         Return LastInsertRowId
+    End Function
+    Function ReadLocation(characterId As Long) As Long?
+        Initialize()
+        Return ExecuteScalar(Of Long)("SELECT [LocationId] FROM [Characters] WHERE [CharacterId]=@CharacterId;", MakeParameter("@CharacterId", characterId))
     End Function
 End Module
