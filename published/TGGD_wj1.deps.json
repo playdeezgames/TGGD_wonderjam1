@@ -10,6 +10,7 @@
       "TGGD_wj1/1.0.0": {
         "dependencies": {
           "Spectre.Console": "0.43.0",
+          "WJ1.Game": "1.0.0",
           "runtimepack.Microsoft.NETCore.App.Runtime.win-x64": "6.0.2"
         },
         "runtime": {
@@ -850,12 +851,88 @@
           }
         }
       },
+      "Microsoft.Data.Sqlite/6.0.3": {
+        "dependencies": {
+          "Microsoft.Data.Sqlite.Core": "6.0.3",
+          "SQLitePCLRaw.bundle_e_sqlite3": "2.0.6"
+        }
+      },
+      "Microsoft.Data.Sqlite.Core/6.0.3": {
+        "dependencies": {
+          "SQLitePCLRaw.core": "2.0.6"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.Data.Sqlite.dll": {
+            "assemblyVersion": "6.0.3.0",
+            "fileVersion": "6.0.322.12306"
+          }
+        }
+      },
       "Spectre.Console/0.43.0": {
         "runtime": {
           "lib/net6.0/Spectre.Console.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.43.0.0"
           }
+        }
+      },
+      "SQLitePCLRaw.bundle_e_sqlite3/2.0.6": {
+        "dependencies": {
+          "SQLitePCLRaw.core": "2.0.6",
+          "SQLitePCLRaw.lib.e_sqlite3": "2.0.6",
+          "SQLitePCLRaw.provider.e_sqlite3": "2.0.6"
+        },
+        "runtime": {
+          "lib/netstandard2.0/SQLitePCLRaw.batteries_v2.dll": {
+            "assemblyVersion": "2.0.6.1341",
+            "fileVersion": "2.0.6.1341"
+          }
+        }
+      },
+      "SQLitePCLRaw.core/2.0.6": {
+        "dependencies": {
+          "System.Memory": "4.5.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/SQLitePCLRaw.core.dll": {
+            "assemblyVersion": "2.0.6.1341",
+            "fileVersion": "2.0.6.1341"
+          }
+        }
+      },
+      "SQLitePCLRaw.lib.e_sqlite3/2.0.6": {
+        "native": {
+          "runtimes/win-x64/native/e_sqlite3.dll": {
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "SQLitePCLRaw.provider.e_sqlite3/2.0.6": {
+        "dependencies": {
+          "SQLitePCLRaw.core": "2.0.6"
+        },
+        "runtime": {
+          "lib/net5.0/SQLitePCLRaw.provider.e_sqlite3.dll": {
+            "assemblyVersion": "2.0.6.1341",
+            "fileVersion": "2.0.6.1341"
+          }
+        }
+      },
+      "System.Memory/4.5.3": {},
+      "WJ1.Data/1.0.0": {
+        "dependencies": {
+          "Microsoft.Data.Sqlite": "6.0.3"
+        },
+        "runtime": {
+          "WJ1.Data.dll": {}
+        }
+      },
+      "WJ1.Game/1.0.0": {
+        "dependencies": {
+          "WJ1.Data": "1.0.0"
+        },
+        "runtime": {
+          "WJ1.Game.dll": {}
         }
       }
     }
@@ -871,12 +948,71 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Microsoft.Data.Sqlite/6.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7KR/Jde8nsii7aKWkT7VBmbOM6XuXD8tNImA0C69qPygtcNZXhqryVlINsQwd1FcpjCFXdBUjagml0I8MJ8++w==",
+      "path": "microsoft.data.sqlite/6.0.3",
+      "hashPath": "microsoft.data.sqlite.6.0.3.nupkg.sha512"
+    },
+    "Microsoft.Data.Sqlite.Core/6.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3EIhLzG+WeJ2AtmGph8aSA5pH9weDOZ9Fox6oaDSiPvj6TIehzYkdW0ySMAfckTbv8V1vCMeEmtqhwEmyK9fYA==",
+      "path": "microsoft.data.sqlite.core/6.0.3",
+      "hashPath": "microsoft.data.sqlite.core.6.0.3.nupkg.sha512"
+    },
     "Spectre.Console/0.43.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-TyfzVxx3jHr1FeeI9Z6Jn6QTnP7KduV14dn9GTYc0v/t2h4L6WJ0Kc2DOnOJUlGBQ/qXK4P+HITIR/JTHcKYLg==",
       "path": "spectre.console/0.43.0",
       "hashPath": "spectre.console.0.43.0.nupkg.sha512"
+    },
+    "SQLitePCLRaw.bundle_e_sqlite3/2.0.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zssYqiaucyGArZfg74rJuzK0ewgZiidsRVrZTmP7JLNvK806gXg6PGA46XzoJGpNPPA5uRcumwvVp6YTYxtQ5w==",
+      "path": "sqlitepclraw.bundle_e_sqlite3/2.0.6",
+      "hashPath": "sqlitepclraw.bundle_e_sqlite3.2.0.6.nupkg.sha512"
+    },
+    "SQLitePCLRaw.core/2.0.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Vh8n0dTvwXkCGur2WqQTITvk4BUO8i8h9ucSx3wwuaej3s2S6ZC0R7vqCTf9TfS/I4QkXO6g3W2YQIRFkOcijA==",
+      "path": "sqlitepclraw.core/2.0.6",
+      "hashPath": "sqlitepclraw.core.2.0.6.nupkg.sha512"
+    },
+    "SQLitePCLRaw.lib.e_sqlite3/2.0.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xlstskMKalKQl0H2uLNe0viBM6fvAGLWqKZUQ3twX5y1tSOZKe0+EbXopQKYdbjJytNGI6y5WSKjpI+kVr2Ckg==",
+      "path": "sqlitepclraw.lib.e_sqlite3/2.0.6",
+      "hashPath": "sqlitepclraw.lib.e_sqlite3.2.0.6.nupkg.sha512"
+    },
+    "SQLitePCLRaw.provider.e_sqlite3/2.0.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-peXLJbhU+0clVBIPirihM1NoTBqw8ouBpcUsVMlcZ4k6fcL2hwgkctVB2Nt5VsbnOJcPspQL5xQK7QvLpxkMgg==",
+      "path": "sqlitepclraw.provider.e_sqlite3/2.0.6",
+      "hashPath": "sqlitepclraw.provider.e_sqlite3.2.0.6.nupkg.sha512"
+    },
+    "System.Memory/4.5.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3oDzvc/zzetpTKWMShs1AADwZjQ/36HnsufHRPcOjyRAAMLDlu2iD33MBI2opxnezcVUtXyqDXXjoFMOU9c7SA==",
+      "path": "system.memory/4.5.3",
+      "hashPath": "system.memory.4.5.3.nupkg.sha512"
+    },
+    "WJ1.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WJ1.Game/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   },
   "runtimes": {
