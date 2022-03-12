@@ -14,4 +14,17 @@ Public Class Character
         Dim direction = CType(CharacterData.ReadDirection(Id).Value, Direction).RelativeDirection(moveDirection)
         Return Location.GetNeighbor(direction)
     End Function
+    Sub Turn(turnDirection As TurnDirection)
+        Dim direction = CType(CharacterData.ReadDirection(Id).Value, Direction)
+        Select Case turnDirection
+            Case TurnDirection.Around
+                CharacterData.WriteDirection(Id, direction.OppositeDirection)
+            Case TurnDirection.Left
+                CharacterData.WriteDirection(Id, direction.PreviousDirection)
+            Case TurnDirection.Right
+                CharacterData.WriteDirection(Id, direction.NextDirection)
+            Case Else
+                Throw New NotImplementedException
+        End Select
+    End Sub
 End Class

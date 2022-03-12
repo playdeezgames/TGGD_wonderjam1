@@ -27,4 +27,11 @@
         Initialize()
         Return ExecuteScalar(Of Long)("SELECT [Direction] FROM [Characters] WHERE [CharacterId]=@CharacterId;", MakeParameter("@CharacterId", characterId))
     End Function
+    Sub WriteDirection(characterId As Long, direction As Long)
+        Initialize()
+        ExecuteNonQuery(
+            "UPDATE [Characters] SET [Direction]=@Direction WHERE [CharacterId]=@CharacterId;",
+            MakeParameter("@CharacterId", characterId),
+            MakeParameter("@Direction", direction))
+    End Sub
 End Module
