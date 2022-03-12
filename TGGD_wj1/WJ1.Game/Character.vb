@@ -7,7 +7,7 @@ Public Class Character
     End Sub
     ReadOnly Property Location As Location
         Get
-            Return New Location(CharacterData.ReadLocation(Id).Value)
+            Return New Location(CharacterData.ReadLocationId(Id).Value)
         End Get
     End Property
     Function GetNextLocation(moveDirection As MoveDirection) As Location
@@ -27,4 +27,12 @@ Public Class Character
                 Throw New NotImplementedException
         End Select
     End Sub
+    Sub Move(moveDirection As MoveDirection)
+        If CanMove(moveDirection) Then
+            CharacterData.WriteLocationId(Id, GetNextLocation(moveDirection).Id)
+        End If
+    End Sub
+    Function CanMove(moveDirection As MoveDirection) As Boolean
+        Return GetNextLocation(moveDirection).LocationType = LocationType.Floor
+    End Function
 End Class

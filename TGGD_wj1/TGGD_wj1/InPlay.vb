@@ -24,8 +24,9 @@ Module InPlay
                 {
                     .Title = "What Next?"
                 }
-        result.AddChoices("Turn")
-        result.AddChoices("Menu")
+        result.AddChoices("Turn...")
+        result.AddChoices("Move...")
+        result.AddChoices("Menu...")
         Return result
     End Function
     Sub Run()
@@ -38,14 +39,16 @@ Module InPlay
             Dim aheadLocation = character.GetNextLocation(MoveDirection.Ahead)
             AnsiConsole.MarkupLine($"Ahead: {aheadLocation.LocationType.Name}")
             Select Case AnsiConsole.Prompt(CreatePrompt())
-                Case "Menu"
+                Case "Menu..."
                     done = HandleGameMenu()
                     If done Then
                         AnsiConsole.WriteLine()
                         AnsiConsole.MarkupLine("You abandon the game.")
                     End If
-                Case "Turn"
+                Case "Turn..."
                     TurnMenu.Run(character)
+                Case "Move..."
+                    MoveMenu.Run(character)
                 Case Else
                     Throw New NotImplementedException
             End Select

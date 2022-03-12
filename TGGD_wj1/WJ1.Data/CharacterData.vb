@@ -19,10 +19,17 @@
             MakeParameter("@LocationId", locationId))
         Return LastInsertRowId
     End Function
-    Function ReadLocation(characterId As Long) As Long?
+    Function ReadLocationId(characterId As Long) As Long?
         Initialize()
         Return ExecuteScalar(Of Long)("SELECT [LocationId] FROM [Characters] WHERE [CharacterId]=@CharacterId;", MakeParameter("@CharacterId", characterId))
     End Function
+    Sub WriteLocationId(characterId As Long, locationId As Long)
+        Initialize()
+        ExecuteNonQuery(
+            "UPDATE [Characters] SET [LocationId]=@LocationId WHERE [CharacterId]=@CharacterId;",
+            MakeParameter("@CharacterId", characterId),
+            MakeParameter("@LocationId", locationId))
+    End Sub
     Function ReadDirection(characterId As Long) As Long?
         Initialize()
         Return ExecuteScalar(Of Long)("SELECT [Direction] FROM [Characters] WHERE [CharacterId]=@CharacterId;", MakeParameter("@CharacterId", characterId))
