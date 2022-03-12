@@ -1,0 +1,4 @@
+[[actions]]
+name = "play"
+path = "TGGD_wj1.exe"
+console = true
