@@ -1,5 +1,22 @@
-﻿Module MainMenu
+﻿Imports Spectre.Console
+Module MainMenu
+    Private Function ConfirmQuit() As Boolean
+        AnsiConsole.WriteLine()
+        Return AnsiConsole.Confirm("Are you sure you want to quit?", False)
+    End Function
     Public Function Run() As Boolean
-        Return False
+        AnsiConsole.WriteLine()
+        Select Case AnsiConsole.Prompt(
+            New SelectionPrompt(Of String)() With {.Title = "Main Menu:"}.AddChoices("Embark", "Quit"))
+            Case "Embark"
+                Embark.Run()
+                Return True
+            Case "Quit"
+                Return Not ConfirmQuit()
+            Case Else
+                AnsiConsole.WriteLine()
+                AnsiConsole.MarkupLine("[red]Invalid Response.[/]")
+                Return True
+        End Select
     End Function
 End Module

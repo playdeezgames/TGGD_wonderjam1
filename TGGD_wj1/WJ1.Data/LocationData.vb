@@ -7,7 +7,8 @@
                 [X] INT NOT NULL,
                 [Y] INT NOT NULL,
                 [Z] INT NOT NULL,
-                [LocationType] INT NOT NULL
+                [LocationType] INT NOT NULL,
+                UNIQUE([X],[Y],[Z])
             );")
     End Sub
     Function Create(locationType As Long, x As Long, y As Long, z As Long) As Long
