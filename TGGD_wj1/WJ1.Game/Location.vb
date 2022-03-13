@@ -27,4 +27,22 @@ Public Class Location
                 ToList()
         End Get
     End Property
+    ReadOnly Property Above As Location
+        Get
+            Dim locationId = LocationData.ReadForXYZ(LocationData.ReadX(Id).Value, LocationData.ReadY(Id).Value, LocationData.ReadZ(Id).Value + 1)
+            If locationId.HasValue Then
+                Return New Location(locationId.Value)
+            End If
+            Return Nothing
+        End Get
+    End Property
+    ReadOnly Property Below As Location
+        Get
+            Dim locationId = LocationData.ReadForXYZ(LocationData.ReadX(Id).Value, LocationData.ReadY(Id).Value, LocationData.ReadZ(Id).Value - 1)
+            If locationId.HasValue Then
+                Return New Location(locationId.Value)
+            End If
+            Return Nothing
+        End Get
+    End Property
 End Class

@@ -1,7 +1,7 @@
 Imports WJ1.Data
 Public Module Game
-    Private BuildingXSize As Long = 11
-    Private BuildingYSize As Long = 11
+    Private BuildingXSize As Long = 7
+    Private BuildingYSize As Long = 7
     Private BuildingZSize As Long = 7
     Private Function DetermineLocationType(x As Long, y As Long) As LocationType
         If x = 1 OrElse x = BuildingXSize Then

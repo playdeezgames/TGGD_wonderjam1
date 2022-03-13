@@ -1,5 +1,6 @@
 ﻿Imports Spectre.Console
 Imports WJ1.Game
+Imports WJ1.Data
 
 Module InPlay
     Private Function HandleGameMenu() As Boolean
@@ -13,19 +14,25 @@ Module InPlay
                 "Abandon"))
             Case "Abandon"
                 Return AnsiConsole.Confirm("Are you sure you want to abandon the game?", False)
+            Case "Debug Save"
+                Store.Save("debug.db")
+                Return False
             Case "Resume"
                 Return False
             Case Else
                 Throw New NotImplementedException
         End Select
     End Function
-    Private Function CreatePrompt() As IPrompt(Of String)
+    Private Function CreatePrompt(character As Character) As IPrompt(Of String)
         Dim result As New SelectionPrompt(Of String)() With
                 {
                     .Title = "What Next?"
                 }
-        result.AddChoices("Turn...")
         result.AddChoices("Move...")
+        result.AddChoices("Turn...")
+        If character.Location.Features.Any Then
+            result.AddChoice("Interact...")
+        End If
         result.AddChoices("Menu...")
         Return result
     End Function
@@ -38,11 +45,11 @@ Module InPlay
             AnsiConsole.MarkupLine($"Here: {location.LocationType.Name}")
             Dim features = location.Features
             If features.Any Then
-                AnsiConsole.MarkupLine($"Features: {String.Join(",", features.Select(Of String)(Function(feature) feature.FeatureType.Name))}")
+                AnsiConsole.MarkupLine($"[teal]Features: {String.Join(",", features.Select(Of String)(Function(feature) feature.FeatureType.Name))}[/]")
             End If
             Dim aheadLocation = character.GetNextLocation(MoveDirection.Ahead)
             AnsiConsole.MarkupLine($"Ahead: {aheadLocation.LocationType.Name}")
-            Select Case AnsiConsole.Prompt(CreatePrompt())
+            Select Case AnsiConsole.Prompt(CreatePrompt(character))
                 Case "Menu..."
                     done = HandleGameMenu()
                     If done Then
@@ -53,6 +60,8 @@ Module InPlay
                     TurnMenu.Run(character)
                 Case "Move..."
                     MoveMenu.Run(character)
+                Case "Interact..."
+                    InteractMenu.Run(character)
                 Case Else
                     Throw New NotImplementedException
             End Select
