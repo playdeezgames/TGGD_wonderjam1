@@ -2,9 +2,11 @@
 
 Public Enum LocationType As Long
     None
+    Corner
     Wall
     Window
     Floor
+    Entrance
 End Enum
 Public Module LocationTypeExtensions
     <Extension()>
@@ -14,10 +16,14 @@ Public Module LocationTypeExtensions
                 Return ""
             Case LocationType.Floor
                 Return "floor"
+            Case LocationType.Corner
+                Return "corner"
             Case LocationType.Wall
                 Return "wall"
             Case LocationType.Window
                 Return "window"
+            Case LocationType.Entrance
+                Return "entrance"
             Case Else
                 Throw New NotImplementedException
         End Select

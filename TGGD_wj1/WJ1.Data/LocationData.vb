@@ -44,6 +44,13 @@
             "SELECT [LocationType] FROM [Locations] WHERE [LocationId]=@LocationId;",
             MakeParameter("@LocationId", locationId))
     End Function
+    Sub WriteLocationType(locationId As Long, locationType As Long)
+        Initialize()
+        ExecuteNonQuery(
+            "UPDATE [Locations] SET [LocationType]=@LocationType WHERE [LocationId]=@LocationId;",
+            MakeParameter("@LocationId", locationId),
+            MakeParameter("@LocationType", locationType))
+    End Sub
     Function ReadX(locationId As Long) As Long?
         Initialize()
         Return ExecuteScalar(Of Long)(

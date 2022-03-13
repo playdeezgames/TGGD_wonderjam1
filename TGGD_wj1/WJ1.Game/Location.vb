@@ -20,6 +20,14 @@ Public Class Location
         End If
         Return Nothing
     End Function
+    ReadOnly Property Neighbors As List(Of Location)
+        Get
+            Return AllDirections.
+                Select(Function(direction) GetNeighbor(direction)).
+                Where(Function(neighbor) neighbor IsNot Nothing).
+                ToList
+        End Get
+    End Property
     ReadOnly Property Features As List(Of Feature)
         Get
             Return FeatureData.ReadForLocationId(Id).Select(

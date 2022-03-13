@@ -10,17 +10,23 @@ Module InteractMenu
         AnsiConsole.MarkupLine("You go down the stairs.")
         character.Location = character.Location.Below
     End Sub
-    Private Sub InteractWithFeature(character As Character, feature As Feature)
+    Private Sub HandleBuildingExit(character As PlayerCharacter)
+        AnsiConsole.MarkupLine("You exit the building.")
+        character.Win()
+    End Sub
+    Private Sub InteractWithFeature(character As PlayerCharacter, feature As Feature)
         Select Case feature.FeatureType
             Case FeatureType.StairsUp
                 GoUpStairs(character)
             Case FeatureType.StairsDown
                 GoDownStairs(character)
+            Case FeatureType.BuildingExit
+                HandleBuildingExit(character)
             Case Else
                 Throw New NotImplementedException
         End Select
     End Sub
-    Sub Run(character As Character)
+    Sub Run(character As PlayerCharacter)
         Dim prompt As New SelectionPrompt(Of String)() With
             {
                 .Title = "Game Menu"

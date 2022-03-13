@@ -3,6 +3,7 @@
 Public Enum FeatureType
     StairsUp
     StairsDown
+    BuildingExit
 End Enum
 Public Module FeatureTypeExtensions
     <Extension()>
@@ -12,6 +13,8 @@ Public Module FeatureTypeExtensions
                 Return "stairs going down"
             Case FeatureType.StairsUp
                 Return "stairs going up"
+            Case FeatureType.BuildingExit
+                Return "building exit"
             Case Else
                 Throw New NotImplementedException
         End Select

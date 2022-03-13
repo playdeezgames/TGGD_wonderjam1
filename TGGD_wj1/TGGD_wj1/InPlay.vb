@@ -62,6 +62,10 @@ Module InPlay
                     MoveMenu.Run(character)
                 Case "Interact..."
                     InteractMenu.Run(character)
+                    If character.DidWin Then
+                        AnsiConsole.MarkupLine("[green]You Win![/]")
+                        done = True
+                    End If
                 Case Else
                     Throw New NotImplementedException
             End Select
