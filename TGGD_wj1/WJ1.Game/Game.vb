@@ -28,9 +28,18 @@ Public Module Game
             Next
         Next
     End Sub
+    Private Sub CreateStairs(z As Long)
+        Dim locationId = RNG.FromList(LocationData.ReadForZAndLocationType(z, LocationType.Floor))
+        FeatureData.Create(locationId, FeatureType.StairsUp)
+        Dim nextLocationId = LocationData.ReadForXYZ(LocationData.ReadX(locationId).Value, LocationData.ReadY(locationId).Value, z + 1).Value
+        FeatureData.Create(nextLocationId, FeatureType.StairsDown)
+    End Sub
     Private Sub CreateBuilding()
         For z = 1 To BuildingZSize
             CreateFloor(z)
+        Next
+        For z = 1 To BuildingZSize - 1
+            CreateStairs(z)
         Next
     End Sub
     Private Sub CreatePlayerCharacter()

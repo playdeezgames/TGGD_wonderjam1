@@ -36,6 +36,10 @@ Module InPlay
             Dim location = character.Location
             AnsiConsole.WriteLine()
             AnsiConsole.MarkupLine($"Here: {location.LocationType.Name}")
+            Dim features = location.Features
+            If features.Any Then
+                AnsiConsole.MarkupLine($"Features: {String.Join(",", features.Select(Of String)(Function(feature) feature.FeatureType.Name))}")
+            End If
             Dim aheadLocation = character.GetNextLocation(MoveDirection.Ahead)
             AnsiConsole.MarkupLine($"Ahead: {aheadLocation.LocationType.Name}")
             Select Case AnsiConsole.Prompt(CreatePrompt())

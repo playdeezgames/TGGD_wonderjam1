@@ -20,4 +20,11 @@ Public Class Location
         End If
         Return Nothing
     End Function
+    ReadOnly Property Features As List(Of Feature)
+        Get
+            Return FeatureData.ReadForLocationId(Id).Select(
+                Function(featureId) New Feature(featureId)).
+                ToList()
+        End Get
+    End Property
 End Class
