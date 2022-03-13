@@ -2,3 +2,6 @@
 name = "play"
 path = "TGGD_wj1.exe"
 console = true
+
+[[prereqs]]
+name = "net-runtime-5-x64"
