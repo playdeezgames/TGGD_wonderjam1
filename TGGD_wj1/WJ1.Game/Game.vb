@@ -57,9 +57,15 @@ Public Module Game
         Dim characterId = CharacterData.Create(CharacterType.Player, locationId, direction)
         PlayerData.Write(characterId, False)
     End Sub
+    Private Sub CreateKey()
+        Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(1, LocationType.Floor)))
+        Dim item = New Item(ItemData.Create(ItemType.Key))
+        location.Inventory.Add(item)
+    End Sub
     Sub Start()
         Store.Reset()
         CreateBuilding()
+        CreateKey()
         CreatePlayerCharacter()
     End Sub
     Sub Finish()

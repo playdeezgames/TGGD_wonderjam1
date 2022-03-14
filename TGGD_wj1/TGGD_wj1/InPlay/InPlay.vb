@@ -33,6 +33,12 @@ Module InPlay
         If character.Location.Features.Any Then
             result.AddChoice("Interact...")
         End If
+        If Not character.Location.Inventory.IsEmpty Then
+            result.AddChoice("Ground...")
+        End If
+        If Not character.Inventory.IsEmpty Then
+            result.AddChoice("Inventory...")
+        End If
         result.AddChoices("Menu...")
         Return result
     End Function
@@ -47,6 +53,9 @@ Module InPlay
             If features.Any Then
                 AnsiConsole.MarkupLine($"[teal]Features: {String.Join(",", features.Select(Of String)(Function(feature) feature.FeatureType.Name))}[/]")
             End If
+            If Not location.Inventory.IsEmpty Then
+                AnsiConsole.MarkupLine("There is stuff on the ground.")
+            End If
             Dim aheadLocation = character.GetNextLocation(MoveDirection.Ahead)
             AnsiConsole.MarkupLine($"Ahead: {aheadLocation.LocationType.Name}")
             Select Case AnsiConsole.Prompt(CreatePrompt(character))
@@ -58,6 +67,10 @@ Module InPlay
                     End If
                 Case "Turn..."
                     TurnMenu.Run(character)
+                Case "Inventory..."
+                    InventoryMenu.Run(character)
+                Case "Ground..."
+                    GroundMenu.Run(character)
                 Case "Move..."
                     MoveMenu.Run(character)
                 Case "Interact..."

@@ -12,11 +12,13 @@
             );")
     End Sub
     Function Read(locationId As Long) As Long?
+        Initialize()
         Return ExecuteScalar(Of Long)(
             "SELECT [InventoryId] FROM [LocationInventories] WHERE [LocationId]=@LocationId;",
             MakeParameter("@LocationId", locationId))
     End Function
     Sub Write(locationId As Long, inventoryId As Long)
+        Initialize()
         ExecuteNonQuery(
             "REPLACE INTO [LocationInventories]
             (
