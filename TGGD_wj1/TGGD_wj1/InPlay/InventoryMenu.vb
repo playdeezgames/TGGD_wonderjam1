@@ -25,6 +25,7 @@ Module InventoryMenu
                     done = True
                 Case Else
                     HandleItemName(character, answer)
+                    done = character.Inventory.IsEmpty
             End Select
         End While
     End Sub
