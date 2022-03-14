@@ -3,7 +3,7 @@ A game in VB.NET about building, decay, and light.
 
 - features
 	-building exit
-		-locked
+		-locked (unlock with key)
 - item
 	-key
 	-flashlight
