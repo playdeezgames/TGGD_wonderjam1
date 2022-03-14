@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 
-Public Enum FeatureType
+Public Enum FeatureType As Long
     StairsUp
     StairsDown
     BuildingExit

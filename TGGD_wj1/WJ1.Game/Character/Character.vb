@@ -38,4 +38,14 @@ Public Class Character
     Function CanMove(moveDirection As MoveDirection) As Boolean
         Return GetNextLocation(moveDirection).LocationType = LocationType.Floor
     End Function
+    ReadOnly Property Inventory As Inventory
+        Get
+            Dim inventoryId = CharacterInventoryData.Read(Id)
+            If Not inventoryId.HasValue Then
+                inventoryId = InventoryData.Create()
+                CharacterInventoryData.Write(Id, inventoryId.Value)
+            End If
+            Return New Inventory(inventoryId.Value)
+        End Get
+    End Property
 End Class
