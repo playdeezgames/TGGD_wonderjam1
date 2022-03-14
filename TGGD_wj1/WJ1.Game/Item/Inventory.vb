@@ -18,4 +18,14 @@ Public Class Inventory
     Sub Add(item As Item)
         InventoryItemData.Write(Id, item.Id)
     End Sub
+    ReadOnly Property StackedItems As Dictionary(Of ItemType, List(Of Item))
+        Get
+            Dim groups = Items.GroupBy(Function(item) item.ItemType)
+            Dim result As New Dictionary(Of ItemType, List(Of Item))
+            For Each group In groups
+                result.Add(group.Key, group.ToList())
+            Next
+            Return result
+        End Get
+    End Property
 End Class

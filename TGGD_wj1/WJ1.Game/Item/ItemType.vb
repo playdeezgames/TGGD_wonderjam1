@@ -13,4 +13,5 @@ Public Module ItemTypeExtensions
                 Throw New NotImplementedException
         End Select
     End Function
+    Public ReadOnly AllItemTypes As New List(Of ItemType) From {ItemType.Key}
 End Module
