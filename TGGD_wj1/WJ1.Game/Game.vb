@@ -40,7 +40,8 @@ Public Module Game
         Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(1, LocationType.Wall)))
         LocationData.WriteLocationType(location.Id, LocationType.Entrance)
         Dim exitLocation = RNG.FromList(location.Neighbors.Where(Function(neighbor) neighbor.LocationType = LocationType.Floor).ToList())
-        FeatureData.Create(exitLocation.Id, FeatureType.BuildingExit)
+        Dim featureId = FeatureData.Create(exitLocation.Id, FeatureType.BuildingExit)
+        BuildingExitData.Write(featureId, True)
     End Sub
     Private Sub CreateBuilding()
         For z = 1 To BuildingZSize

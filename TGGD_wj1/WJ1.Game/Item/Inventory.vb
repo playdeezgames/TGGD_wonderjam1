@@ -28,4 +28,7 @@ Public Class Inventory
             Return result
         End Get
     End Property
+    Function HasItemType(itemType As ItemType) As Boolean
+        Return Items.Any(Function(item) item.ItemType = itemType)
+    End Function
 End Class

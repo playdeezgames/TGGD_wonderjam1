@@ -10,9 +10,18 @@ Module InteractMenu
         AnsiConsole.MarkupLine("You go down the stairs.")
         character.Location = character.Location.Below
     End Sub
-    Private Sub HandleBuildingExit(character As PlayerCharacter)
-        AnsiConsole.MarkupLine("You exit the building.")
-        character.Win()
+    Private Sub HandleBuildingExit(character As PlayerCharacter, feature As Feature)
+        If feature.IsLocked Then
+            If character.Inventory.HasItemType(ItemType.Key) Then
+                feature.Unlock()
+                AnsiConsole.MarkupLine("[green]You unlock it![/]")
+            Else
+                AnsiConsole.MarkupLine("[red]It is locked![/]")
+            End If
+        Else
+            AnsiConsole.MarkupLine("[lime]You exit the building.[/]")
+            character.Win()
+        End If
     End Sub
     Private Sub InteractWithFeature(character As PlayerCharacter, feature As Feature)
         Select Case feature.FeatureType
@@ -21,7 +30,7 @@ Module InteractMenu
             Case FeatureType.StairsDown
                 GoDownStairs(character)
             Case FeatureType.BuildingExit
-                HandleBuildingExit(character)
+                HandleBuildingExit(character, feature)
             Case Else
                 Throw New NotImplementedException
         End Select
