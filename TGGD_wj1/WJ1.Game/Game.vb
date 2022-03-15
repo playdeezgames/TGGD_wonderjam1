@@ -1,8 +1,11 @@
 Imports WJ1.Data
 Public Module Game
-    Private BuildingXSize As Long = 7
-    Private BuildingYSize As Long = 7
-    Private BuildingZSize As Long = 7
+    Const BuildingXSize As Long = 7
+    Const BuildingYSize As Long = 7
+    Const BuildingZSize As Long = 7
+    Const PlayerZ As Long = 1
+    Const KeyZ As Long = BuildingZSize
+
     Private Function DetermineLocationType(x As Long, y As Long) As LocationType
         If (x = 1 AndAlso y = 1) OrElse (x = BuildingXSize AndAlso y = 1) OrElse (x = 1 AndAlso y = BuildingYSize) OrElse (x = BuildingXSize AndAlso y = BuildingYSize) Then
             Return LocationType.Corner
@@ -53,13 +56,13 @@ Public Module Game
         CreateEntrance()
     End Sub
     Private Sub CreatePlayerCharacter()
-        Dim locationId = RNG.FromList(LocationData.ReadForZAndLocationType(1, LocationType.Floor))
+        Dim locationId = RNG.FromList(LocationData.ReadForZAndLocationType(PlayerZ, LocationType.Floor))
         Dim direction = RNG.FromList(AllDirections)
         Dim characterId = CharacterData.Create(CharacterType.Player, locationId, direction)
         PlayerData.Write(characterId, False)
     End Sub
     Private Sub CreateKey()
-        Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(1, LocationType.Floor)))
+        Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(KeyZ, LocationType.Floor)))
         Dim item = New Item(ItemData.Create(ItemType.Key))
         location.Inventory.Add(item)
     End Sub
