@@ -63,4 +63,13 @@ Public Class Location
             Return New Inventory(inventoryId.Value)
         End Get
     End Property
+    ReadOnly Property LightLevel As Integer
+        Get
+            'TODO: any lit torch in a character's hand increases light level by 1
+            'TODO: any lit torch on the ground increases light level by 1
+            Return Neighbors.AsEnumerable.Count(Function(neighbor)
+                                                    Return neighbor.LocationType = LocationType.Window
+                                                End Function)
+        End Get
+    End Property
 End Class

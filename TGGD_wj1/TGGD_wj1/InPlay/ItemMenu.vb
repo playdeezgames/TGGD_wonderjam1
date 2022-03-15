@@ -19,6 +19,13 @@ Module ItemMenu
             Dim items = character.Inventory.Items.Where(Function(item) item.ItemType = itemType).ToList
             AnsiConsole.MarkupLine($"You have {items.Count} {itemType.Name}.")
             Dim prompt As New SelectionPrompt(Of String) With {.Title = "What do you want to do?"}
+            If itemType.CanFaff Then
+                If items.Count = 1 Then
+                    prompt.AddChoice("Faff with")
+                Else
+                    prompt.AddChoice("Faff with...")
+                End If
+            End If
             Select Case items.Count
                 Case 1
                     prompt.AddChoice("Drop")
@@ -29,6 +36,10 @@ Module ItemMenu
             prompt.AddChoice("Never mind")
             Dim answer = AnsiConsole.Prompt(prompt)
             Select Case answer
+                Case "Faff with"
+                    FaffMenu.Run(character, items.Single())
+                Case "Faff with..."
+                    PickMenu.Run(character, items)
                 Case "Drop one"
                     DropOne(character, items.First)
                 Case "Drop", "Drop all"

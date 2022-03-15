@@ -16,4 +16,14 @@
             MakeParameter("@ItemId", itemId),
             MakeParameter("@SwitchState", switchState))
     End Sub
+    Function Read(itemId As Long) As Boolean?
+        Initialize()
+        Dim result = ExecuteScalar(Of Long)(
+            "SELECT [SwitchState] FROM [Torches] WHEREN [ItemId]=@ItemId;",
+            MakeParameter("@ItemId", itemId))
+        If result.HasValue Then
+            Return CBool(result.Value)
+        End If
+        Return Nothing
+    End Function
 End Module

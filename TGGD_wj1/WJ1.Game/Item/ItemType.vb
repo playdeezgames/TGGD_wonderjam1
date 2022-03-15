@@ -16,6 +16,15 @@ Public Module ItemTypeExtensions
                 Throw New NotImplementedException
         End Select
     End Function
+    <Extension()>
+    Function CanFaff(itemType As ItemType) As Boolean
+        Select Case itemType
+            Case ItemType.Torch
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
     Public ReadOnly AllItemTypes As New List(Of ItemType) From
         {
             ItemType.Key,
