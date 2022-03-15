@@ -25,6 +25,30 @@ Public Module Game
             Return LocationType.Floor
         End If
     End Function
+    Private Function GenerateInteriorWall(z As Long) As Boolean
+        Static deltas As New List(Of Tuple(Of Long, Long)) From
+            {
+                New Tuple(Of Long, Long)(0, -1),
+                New Tuple(Of Long, Long)(1, -1),
+                New Tuple(Of Long, Long)(1, 0),
+                New Tuple(Of Long, Long)(1, 1),
+                New Tuple(Of Long, Long)(0, 1),
+                New Tuple(Of Long, Long)(-1, 1),
+                New Tuple(Of Long, Long)(-1, 0),
+                New Tuple(Of Long, Long)(-1, -1)
+            }
+        Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(z, LocationType.Floor)))
+        If deltas.All(Function(delta) New Location(
+                              LocationData.ReadForXYZ(
+                                  LocationData.ReadX(location.Id).Value + delta.Item1,
+                                  LocationData.ReadY(location.Id).Value + delta.Item2,
+                                  z).Value).
+                              LocationType = LocationType.Floor) Then
+            LocationData.WriteLocationType(location.Id, LocationType.Wall)
+            Return True
+        End If
+        Return False
+    End Function
     Private Sub CreateFloor(z As Long)
         For x = 1 To BuildingXSize
             For y = 1 To BuildingYSize
@@ -32,6 +56,14 @@ Public Module Game
                 LocationData.Create(locationType, x, y, z)
             Next
         Next
+        Dim retries = 0
+        While retries < 10
+            If GenerateInteriorWall(z) Then
+                retries = 0
+            Else
+                retries += 1
+            End If
+        End While
     End Sub
     Private Sub CreateStairs(z As Long)
         Dim locationId = RNG.FromList(LocationData.ReadForZAndLocationType(z, LocationType.Floor))
