@@ -2,6 +2,7 @@
 
 Public Enum ItemType As Long
     Key
+    Torch
 End Enum
 Public Module ItemTypeExtensions
     <Extension()>
@@ -9,9 +10,15 @@ Public Module ItemTypeExtensions
         Select Case itemType
             Case ItemType.Key
                 Return "key"
+            Case ItemType.Torch
+                Return "torch"
             Case Else
                 Throw New NotImplementedException
         End Select
     End Function
-    Public ReadOnly AllItemTypes As New List(Of ItemType) From {ItemType.Key}
+    Public ReadOnly AllItemTypes As New List(Of ItemType) From
+        {
+            ItemType.Key,
+            ItemType.Torch
+        }
 End Module

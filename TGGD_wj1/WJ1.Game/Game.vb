@@ -98,9 +98,16 @@ Public Module Game
         Dim item = New Item(ItemData.Create(ItemType.Key))
         location.Inventory.Add(item)
     End Sub
+    Private Sub CreateTorch()
+        Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(PlayerZ, LocationType.Floor)))
+        Dim item = New Item(ItemData.Create(ItemType.Torch))
+        TorchData.Write(item.Id, True)
+        location.Inventory.Add(item)
+    End Sub
     Sub Start()
         Store.Reset()
         CreateBuilding()
+        CreateTorch()
         CreateKey()
         CreatePlayerCharacter()
     End Sub

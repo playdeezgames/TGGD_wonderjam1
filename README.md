@@ -2,6 +2,6 @@
 A game in VB.NET about building, decay, and light.
 
 - item
-	-flashlight
+	-torch
 	-batteries
 - light levels at locations
