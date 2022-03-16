@@ -12,4 +12,7 @@ A game in VB.NET about building, decay, and light.
 		- must be able to turn off and on
 		- must be able to load batteries and unload batteries
 	-batteries
+	-wire
+	-led
+	-battery tester
 - light levels at locations

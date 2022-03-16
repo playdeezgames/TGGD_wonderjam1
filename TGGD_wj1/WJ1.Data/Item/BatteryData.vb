@@ -16,4 +16,8 @@
             MakeParameter("@ItemId", itemId),
             MakeParameter("@Charge", charge))
     End Sub
+    Function Read(itemId As Long) As Long?
+        Initialize()
+        Return ExecuteScalar(Of Long)("SELECT [Charge] FROM [Batteries] WHERE [ItemId]=@ItemId;", MakeParameter("@ItemId", itemId))
+    End Function
 End Module

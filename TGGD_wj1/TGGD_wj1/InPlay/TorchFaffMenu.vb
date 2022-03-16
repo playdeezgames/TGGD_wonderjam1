@@ -42,6 +42,9 @@ Module TorchFaffMenu
             If item.IsSwitchedOn Then
                 AnsiConsole.MarkupLine($"{item.Name} is switched on.")
                 prompt.AddChoice("Switch off")
+                If item.IsLit Then
+                    AnsiConsole.MarkupLine($"{item.Name} is lit.")
+                End If
             Else
                 AnsiConsole.MarkupLine($"{item.Name} is switched off.")
                 prompt.AddChoice("Switch on")

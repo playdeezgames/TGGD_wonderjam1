@@ -10,12 +10,6 @@ Public Class Item
             Return CType(ItemData.ReadItemType(Id).Value, ItemType)
         End Get
     End Property
-    ReadOnly Property IsLit As Boolean
-        Get
-            'TODO: if it is a torch and the torch is lit and the torch has non-dead batteries, it is lit
-            Return False
-        End Get
-    End Property
     ReadOnly Property IsSwitchedOn As Boolean
         Get
             Select Case ItemType
@@ -68,6 +62,23 @@ Public Class Item
                 Return New Item(itemId.Value)
             End If
             Return Nothing
+        End Get
+    End Property
+    ReadOnly Property Charge As Long?
+        Get
+            If ItemType = ItemType.Battery Then
+                Return BatteryData.Read(Id)
+            Else
+                Return Nothing
+            End If
+        End Get
+    End Property
+    ReadOnly Property IsLit As Boolean
+        Get
+            Return ItemType = ItemType.Torch AndAlso
+                Battery IsNot Nothing AndAlso
+                Battery.Charge.HasValue AndAlso
+                Battery.Charge.Value > 0
         End Get
     End Property
 End Class
