@@ -3,7 +3,7 @@ Imports WJ1.Game
 
 Module ItemMenu
     Private Sub DropOne(character As Character, item As Item)
-        AnsiConsole.MarkupLine($"You drop {item.ItemType.Name}.")
+        AnsiConsole.MarkupLine($"You drop {item.Name}.")
         character.Location.Inventory.Add(item)
     End Sub
     Private Sub DropAll(character As Character, items As List(Of Item))
@@ -14,7 +14,6 @@ Module ItemMenu
     Sub Run(character As Character, itemType As ItemType)
         Dim done = False
         While Not done
-
             AnsiConsole.WriteLine()
             Dim items = character.Inventory.Items.Where(Function(item) item.ItemType = itemType).ToList
             AnsiConsole.MarkupLine($"You have {items.Count} {itemType.Name}.")

@@ -3,10 +3,10 @@ Imports WJ1.Game
 
 Module GroundMenu
     Private Sub PickUpItem(character As Character, itemName As String)
-        Dim firstItem = character.Location.Inventory.Items.First(Function(item) item.ItemType.Name = itemName)
+        Dim firstItem = character.Location.Inventory.Items.First(Function(item) item.Name = itemName)
         character.Inventory.Add(firstItem)
         AnsiConsole.WriteLine()
-        AnsiConsole.MarkupLine($"You pick up {firstItem.ItemType.Name}.")
+        AnsiConsole.MarkupLine($"You pick up {firstItem.Name}.")
     End Sub
     Sub Run(character As Character)
         Dim done = False
@@ -18,7 +18,7 @@ Module GroundMenu
             }
             Dim items = character.Location.Inventory.Items
             For Each item In items
-                prompt.AddChoice(item.ItemType.Name)
+                prompt.AddChoice(item.Name)
             Next
             prompt.AddChoice("Never mind")
             Dim answer = AnsiConsole.Prompt(prompt)

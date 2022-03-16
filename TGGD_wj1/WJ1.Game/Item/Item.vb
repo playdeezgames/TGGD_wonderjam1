@@ -38,4 +38,10 @@ Public Class Item
                 TorchData.Write(Id, False)
         End Select
     End Sub
+    ReadOnly Property Name As String
+        Get
+            Return ItemType.Name
+        End Get
+    End Property
+
 End Class

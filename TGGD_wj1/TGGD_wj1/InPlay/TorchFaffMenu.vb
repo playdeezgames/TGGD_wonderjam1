@@ -8,23 +8,23 @@ Module TorchFaffMenu
             AnsiConsole.WriteLine()
             Dim prompt As New SelectionPrompt(Of String)() With
             {
-            .Title = $"What would you like to do with {item.ItemType.Name}?"
+            .Title = $"What would you like to do with {item.Name}?"
             }
             If item.IsSwitchedOn Then
-                AnsiConsole.MarkupLine($"{item.ItemType.Name} is switched on.")
+                AnsiConsole.MarkupLine($"{item.Name} is switched on.")
                 prompt.AddChoice("Switch off")
             Else
-                AnsiConsole.MarkupLine($"{item.ItemType.Name} is switched off.")
+                AnsiConsole.MarkupLine($"{item.Name} is switched off.")
                 prompt.AddChoice("Switch on")
             End If
             prompt.AddChoice("Never mind")
             Select Case AnsiConsole.Prompt(prompt)
                 Case "Switch on"
                     item.SwitchOn()
-                    AnsiConsole.MarkupLine($"You switch {item.ItemType.Name} on.")
+                    AnsiConsole.MarkupLine($"You switch {item.Name} on.")
                 Case "Switch off"
                     item.SwitchOff()
-                    AnsiConsole.MarkupLine($"You switch {item.ItemType.Name} off.")
+                    AnsiConsole.MarkupLine($"You switch {item.Name} off.")
                 Case "Never mind"
                     done = True
                 Case Else
