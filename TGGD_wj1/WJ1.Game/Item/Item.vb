@@ -26,4 +26,16 @@ Public Class Item
             End Select
         End Get
     End Property
+    Sub SwitchOn()
+        Select Case ItemType
+            Case ItemType.Torch
+                TorchData.Write(Id, True)
+        End Select
+    End Sub
+    Sub SwitchOff()
+        Select Case ItemType
+            Case ItemType.Torch
+                TorchData.Write(Id, False)
+        End Select
+    End Sub
 End Class

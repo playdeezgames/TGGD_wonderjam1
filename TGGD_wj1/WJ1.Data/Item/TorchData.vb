@@ -19,7 +19,7 @@
     Function Read(itemId As Long) As Boolean?
         Initialize()
         Dim result = ExecuteScalar(Of Long)(
-            "SELECT [SwitchState] FROM [Torches] WHEREN [ItemId]=@ItemId;",
+            "SELECT [SwitchState] FROM [Torches] WHERE [ItemId]=@ItemId;",
             MakeParameter("@ItemId", itemId))
         If result.HasValue Then
             Return CBool(result.Value)

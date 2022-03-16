@@ -92,6 +92,11 @@ Public Module Game
         Dim direction = RNG.FromList(AllDirections)
         Dim characterId = CharacterData.Create(CharacterType.Player, locationId, direction)
         PlayerData.Write(characterId, False)
+        'give him a torch
+        Dim itemId = ItemData.Create(ItemType.Torch)
+        TorchData.Write(itemId, True)
+        Dim character As New PlayerCharacter
+        character.Inventory.Add(New Item(itemId))
     End Sub
     Private Sub CreateKey()
         Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(KeyZ, LocationType.Floor)))
