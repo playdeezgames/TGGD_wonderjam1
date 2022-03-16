@@ -18,6 +18,12 @@ Public Class Inventory
     Sub Add(item As Item)
         InventoryItemData.Write(Id, item.Id)
     End Sub
+    Sub Remove(item As Item)
+        Dim itemInventoryId = InventoryItemData.ReadForItemId(item.Id)
+        If itemInventoryId.HasValue AndAlso itemInventoryId.Value = Id Then
+            InventoryItemData.ClearForItemId(item.Id)
+        End If
+    End Sub
     ReadOnly Property StackedItems As Dictionary(Of ItemType, List(Of Item))
         Get
             Dim groups = Items.GroupBy(Function(item) item.ItemType)

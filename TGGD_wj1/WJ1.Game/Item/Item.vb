@@ -47,13 +47,27 @@ Public Class Item
         Get
             Select Case ItemType
                 Case ItemType.Torch
-                    Return TorchBatteryData.ReadBattery(Id).HasValue
+                    Return TorchBatteryData.Read(Id).HasValue
                 Case Else
                     Return False
             End Select
         End Get
     End Property
     Sub RemoveBattery()
-        Throw New NotImplementedException
+        TorchBatteryData.Clear(Id)
     End Sub
+    Sub AddBattery(battery As Item)
+        If ItemType = ItemType.Torch AndAlso Not HasBattery AndAlso battery.ItemType = ItemType.Battery Then
+            TorchBatteryData.Write(Id, battery.Id)
+        End If
+    End Sub
+    ReadOnly Property Battery As Item
+        Get
+            Dim itemId = TorchBatteryData.Read(Id)
+            If itemId.HasValue Then
+                Return New Item(itemId.Value)
+            End If
+            Return Nothing
+        End Get
+    End Property
 End Class

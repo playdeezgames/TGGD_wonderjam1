@@ -25,6 +25,14 @@
             End Using
         End Using
     End Function
+    Function ReadForItemId(itemId As Long) As Long?
+        Initialize()
+        Return ExecuteScalar(Of Long)("SELECT [InventoryId] FROM [InventoryItems] WHERE [ItemId]=@ItemId;", MakeParameter("@ItemId", itemId))
+    End Function
+    Sub ClearForItemId(itemId As Long)
+        Initialize()
+        ExecuteNonQuery("DELETE FROM [InventoryItems] WHERE [ItemId]=@ItemId;", MakeParameter("@ItemId", itemId))
+    End Sub
     Sub Write(inventoryId As Long, itemId As Long)
         Initialize()
         ExecuteNonQuery(

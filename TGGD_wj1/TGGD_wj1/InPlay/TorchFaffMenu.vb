@@ -2,16 +2,34 @@
 Imports WJ1.Game
 
 Module TorchFaffMenu
+    Private Sub InsertBattery(character As Character, torch As Item, battery As Item)
+        character.Inventory.Remove(battery)
+        torch.AddBattery(battery)
+        AnsiConsole.MarkupLine("[green]You add the battery to the torch[/]")
+    End Sub
     Private Sub HandleInsertBattery(character As Character, item As Item)
         Dim batteries = character.Inventory.StackedItems(ItemType.Battery)
         AnsiConsole.WriteLine()
         Dim prompt As New SelectionPrompt(Of String) With {.Title = "Which battery do you want to insert?"}
+        Dim index = 1
+        For Each battery In batteries
+            prompt.AddChoice($"{index}. {battery.Name}")
+        Next
         prompt.AddChoice("Never mind")
         Dim answer = AnsiConsole.Prompt(prompt)
         Select Case answer
             Case "Never mind"
                 'do nothing
+            Case Else
+                index = CInt(answer.Split("."c).First()) - 1
+                InsertBattery(character, item, batteries(index))
         End Select
+    End Sub
+    Private Sub HandleRemoveBattery(character As Character, item As Item)
+        Dim battery = item.Battery
+        item.RemoveBattery()
+        character.Inventory.Add(battery)
+        AnsiConsole.MarkupLine($"You remove the battery from {item.Name}.")
     End Sub
     Sub Run(character As Character, item As Item)
         Dim done As Boolean
@@ -46,8 +64,7 @@ Module TorchFaffMenu
                     item.SwitchOff()
                     AnsiConsole.MarkupLine($"You switch {item.Name} off.")
                 Case "Remove battery"
-                    item.RemoveBattery()
-                    AnsiConsole.MarkupLine($"You remove the battery from {item.Name}.")
+                    HandleRemoveBattery(character, item)
                 Case "Insert battery"
                     HandleInsertBattery(character, item)
                 Case "Never mind"
