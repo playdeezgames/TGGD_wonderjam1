@@ -97,6 +97,14 @@ Public Module Game
         TorchData.Write(itemId, True)
         Dim character As New PlayerCharacter
         character.Inventory.Add(New Item(itemId))
+        'give full battery
+        itemId = ItemData.Create(ItemType.Battery)
+        BatteryData.Write(itemId, 100)
+        character.Inventory.Add(New Item(itemId))
+        'give empty battery
+        itemId = ItemData.Create(ItemType.Battery)
+        BatteryData.Write(itemId, 0)
+        character.Inventory.Add(New Item(itemId))
     End Sub
     Private Sub CreateKey()
         Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(KeyZ, LocationType.Floor)))

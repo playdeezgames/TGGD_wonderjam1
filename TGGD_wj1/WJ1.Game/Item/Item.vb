@@ -43,5 +43,17 @@ Public Class Item
             Return ItemType.Name
         End Get
     End Property
-
+    ReadOnly Property HasBattery As Boolean
+        Get
+            Select Case ItemType
+                Case ItemType.Torch
+                    Return TorchBatteryData.ReadBattery(Id).HasValue
+                Case Else
+                    Return False
+            End Select
+        End Get
+    End Property
+    Sub RemoveBattery()
+        Throw New NotImplementedException
+    End Sub
 End Class
