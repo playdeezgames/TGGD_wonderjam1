@@ -3,6 +3,7 @@ Public Module Game
     Const BuildingXSize As Long = 7
     Const BuildingYSize As Long = 7
     Const BuildingZSize As Long = 7
+    Const GroundZ As Long = 1
     Const PlayerZ As Long = 1
     Const KeyZ As Long = BuildingZSize
     Const BatteryCount As Long = 20
@@ -135,12 +136,24 @@ Public Module Game
     Sub Play(sfx As Sfx)
         RaiseEvent PlaySfx(sfx)
     End Sub
+    Private Sub RotFloor(locationId As Long)
+        If LocationData.ReadZ(locationId) > GroundZ Then
+            Dim location As New Location(locationId)
+            Dim below = location.Below
+            below.LocationType = LocationType.Floor
+            'a heap of rubble appears on the floor below
+            For Each item In location.Inventory.Items
+                'add item to rubble heap
+            Next
+            'the location is removed from the game
+        End If
+    End Sub
     Private Sub UpdateDecay()
         Dim locationIds = LocationDecayData.ReadAll()
         For Each locationId In locationIds
             Dim decay = LocationDecayData.Read(locationId).Value
             If RNG.FromRange(1, 100) < decay Then
-                'TODO: the floor decays away
+                RotFloor(locationId)
             End If
             LocationDecayData.Write(locationId, decay + 1)
         Next
