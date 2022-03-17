@@ -5,6 +5,7 @@ Public Module Game
     Const BuildingZSize As Long = 7
     Const PlayerZ As Long = 1
     Const KeyZ As Long = BuildingZSize
+    Const BatteryCount As Long = 20
 
     Private Function DetermineLocationType(x As Long, y As Long) As LocationType
         If (x = 1 AndAlso y = 1) OrElse (x = BuildingXSize AndAlso y = 1) OrElse (x = 1 AndAlso y = BuildingYSize) OrElse (x = BuildingXSize AndAlso y = BuildingYSize) Then
@@ -92,19 +93,6 @@ Public Module Game
         Dim direction = RNG.FromList(AllDirections)
         Dim characterId = CharacterData.Create(CharacterType.Player, locationId, direction)
         PlayerData.Write(characterId, False)
-        'give him a torch
-        Dim itemId = ItemData.Create(ItemType.Torch)
-        TorchData.Write(itemId, True)
-        Dim character As New PlayerCharacter
-        character.Inventory.Add(New Item(itemId))
-        'give full battery
-        itemId = ItemData.Create(ItemType.Battery)
-        BatteryData.Write(itemId, 100)
-        character.Inventory.Add(New Item(itemId))
-        'give empty battery
-        itemId = ItemData.Create(ItemType.Battery)
-        BatteryData.Write(itemId, 0)
-        character.Inventory.Add(New Item(itemId))
     End Sub
     Private Sub CreateKey()
         Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(KeyZ, LocationType.Floor)))
@@ -121,11 +109,22 @@ Public Module Game
         Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(BuildingZSize, LocationType.Floor)))
         LocationDecayData.Write(location.Id, 1)
     End Sub
+    Private Sub CreateBatteries()
+        Dim batteryIds As New List(Of Long)
+        While batteryIds.Count < BatteryCount
+            Dim batteryId = ItemData.Create(ItemType.Battery)
+            BatteryData.Write(batteryId, RNG.FromRange(0, 100))
+            Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(RNG.FromRange(1, BuildingZSize), LocationType.Floor)))
+            location.Inventory.Add(New Item(batteryId))
+            batteryIds.Add(batteryId)
+        End While
+    End Sub
     Sub Start()
         Store.Reset()
         CreateBuilding()
         StartDecay()
         CreateTorch()
+        CreateBatteries()
         CreateKey()
         CreatePlayerCharacter()
     End Sub
