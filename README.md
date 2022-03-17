@@ -16,3 +16,4 @@ A game in VB.NET about building, decay, and light.
 	-led
 	-battery tester
 - light levels at locations
+- decay

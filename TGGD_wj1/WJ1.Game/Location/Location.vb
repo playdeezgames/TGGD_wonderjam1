@@ -10,6 +10,11 @@ Public Class Location
             Return CType(LocationData.ReadLocationType(Id).Value, LocationType)
         End Get
     End Property
+    ReadOnly Property Decay As Long?
+        Get
+            Return LocationDecayData.Read(Id)
+        End Get
+    End Property
     Function GetNeighbor(direction As Direction) As Location
         Dim z = LocationData.ReadZ(Id).Value
         Dim x = direction.NextX(LocationData.ReadX(Id).Value)

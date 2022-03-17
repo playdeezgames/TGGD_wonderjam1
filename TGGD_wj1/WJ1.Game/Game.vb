@@ -117,9 +117,14 @@ Public Module Game
         TorchData.Write(item.Id, True)
         location.Inventory.Add(item)
     End Sub
+    Private Sub StartDecay()
+        Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(BuildingZSize, LocationType.Floor)))
+        LocationDecayData.Write(location.Id, 1)
+    End Sub
     Sub Start()
         Store.Reset()
         CreateBuilding()
+        StartDecay()
         CreateTorch()
         CreateKey()
         CreatePlayerCharacter()
@@ -130,5 +135,19 @@ Public Module Game
     Public Event PlaySfx As Action(Of Sfx)
     Sub Play(sfx As Sfx)
         RaiseEvent PlaySfx(sfx)
+    End Sub
+    Private Sub UpdateDecay()
+        Dim locationIds = LocationDecayData.ReadAll()
+        For Each locationId In locationIds
+            Dim decay = LocationDecayData.Read(locationId).Value
+            If RNG.FromRange(1, 100) < decay Then
+                'TODO: the floor decays away
+            End If
+            LocationDecayData.Write(locationId, decay + 1)
+        Next
+    End Sub
+    Sub Update()
+        UpdateDecay()
+        'drain batteries
     End Sub
 End Module

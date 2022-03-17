@@ -49,6 +49,9 @@ Module InPlay
             Dim location = character.Location
             AnsiConsole.WriteLine()
             AnsiConsole.MarkupLine($"Here: {location.LocationType.Name}")
+            If location.Decay.HasValue Then
+                AnsiConsole.MarkupLine($"Decay: {location.Decay.Value}%")
+            End If
             Dim features = location.Features
             If features.Any Then
                 AnsiConsole.MarkupLine($"[teal]Features: {String.Join(",", features.Select(Of String)(Function(feature) feature.FeatureType.Name))}[/]")

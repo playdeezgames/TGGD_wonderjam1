@@ -21,15 +21,19 @@ Module MoveMenu
             Case "Ahead"
                 AnsiConsole.MarkupLine("You move ahead.")
                 character.Move(MoveDirection.Ahead)
+                Game.Update()
             Case "Left"
                 AnsiConsole.MarkupLine("You move left.")
                 character.Move(MoveDirection.Left)
+                Game.Update()
             Case "Right"
                 AnsiConsole.MarkupLine("You move right.")
                 character.Move(MoveDirection.Right)
+                Game.Update()
             Case "Back"
                 AnsiConsole.MarkupLine("You move back.")
                 character.Move(MoveDirection.Back)
+                Game.Update()
             Case "Never mind"
                 'do nothing
             Case Else
