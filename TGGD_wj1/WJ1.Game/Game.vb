@@ -146,8 +146,18 @@ Public Module Game
             LocationDecayData.Write(locationId, decay + 1)
         Next
     End Sub
+    Private Sub DrainBatteries()
+        Dim batteryIds = TorchBatteryData.ReadAllBatteryIds()
+        For Each batteryId In batteryIds
+            Dim battery As New Item(batteryId)
+            Dim torch As New Item(TorchBatteryData.ReadForBatteryId(batteryId).Value)
+            If torch.IsLit Then
+                battery.Charge -= 1
+            End If
+        Next
+    End Sub
     Sub Update()
         UpdateDecay()
-        'drain batteries
+        DrainBatteries()
     End Sub
 End Module

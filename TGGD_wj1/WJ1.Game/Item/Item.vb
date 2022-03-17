@@ -64,7 +64,7 @@ Public Class Item
             Return Nothing
         End Get
     End Property
-    ReadOnly Property Charge As Long?
+    Property Charge As Long?
         Get
             If ItemType = ItemType.Battery Then
                 Return BatteryData.Read(Id)
@@ -72,6 +72,13 @@ Public Class Item
                 Return Nothing
             End If
         End Get
+        Set(value As Long?)
+            If ItemType = ItemType.Battery Then
+                If value.HasValue Then
+                    BatteryData.Write(Id, value.Value)
+                End If
+            End If
+        End Set
     End Property
     ReadOnly Property IsLit As Boolean
         Get

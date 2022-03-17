@@ -14,6 +14,7 @@ Module TorchFaffMenu
         Dim index = 1
         For Each battery In batteries
             prompt.AddChoice($"{index}. {battery.Name}")
+            index += 1
         Next
         prompt.AddChoice("Never mind")
         Dim answer = AnsiConsole.Prompt(prompt)

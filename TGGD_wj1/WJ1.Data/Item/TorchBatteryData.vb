@@ -23,4 +23,22 @@
         Initialize()
         ExecuteNonQuery("DELETE FROM [TorchBatteries] WHERE [ItemId]=@ItemId;", MakeParameter("@ItemId", itemId))
     End Sub
+    Function ReadAllBatteryIds() As List(Of Long)
+        Initialize()
+        Using command = CreateCommand("SELECT [BatteryId] FROM [TorchBatteries];")
+            Using reader = command.ExecuteReader
+                Dim result As New List(Of Long)
+                While reader.Read
+                    result.Add(CLng(reader("BatteryId")))
+                End While
+                Return result
+            End Using
+        End Using
+    End Function
+    Function ReadForBatteryId(batteryId As Long) As Long?
+        Initialize()
+        Return ExecuteScalar(Of Long)(
+            "SELECT [ItemId] FROM [TorchBatteries] WHERE [BatteryId]=@BatteryId;",
+            MakeParameter("@BatteryId", batteryId))
+    End Function
 End Module
