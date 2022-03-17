@@ -83,6 +83,7 @@ Public Class Item
     ReadOnly Property IsLit As Boolean
         Get
             Return ItemType = ItemType.Torch AndAlso
+                IsSwitchedOn AndAlso
                 Battery IsNot Nothing AndAlso
                 Battery.Charge.HasValue AndAlso
                 Battery.Charge.Value > 0

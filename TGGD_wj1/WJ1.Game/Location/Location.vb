@@ -68,13 +68,28 @@ Public Class Location
             Return New Inventory(inventoryId.Value)
         End Get
     End Property
+    ReadOnly Property Characters As List(Of Character)
+        Get
+            Characters = CharacterData.ReadForLocationId(Id).Select(Function(characterId) New Character(characterId)).ToList()
+        End Get
+    End Property
     ReadOnly Property LightLevel As Integer
         Get
-            'TODO: any lit torch in a character's hand increases light level by 1
-            'TODO: any lit torch on the ground increases light level by 1
-            Return Neighbors.AsEnumerable.Count(Function(neighbor)
-                                                    Return neighbor.LocationType = LocationType.Window
-                                                End Function)
+            LightLevel = Neighbors.AsEnumerable.Count(Function(neighbor)
+                                                          Return neighbor.LocationType = LocationType.Window
+                                                      End Function)
+            If Characters.Any(Function(character)
+                                  Return character.Inventory.Items.Any(Function(item)
+                                                                           Return item.IsLit
+                                                                       End Function)
+                              End Function) Then
+                LightLevel += 1
+            End If
+            If Inventory.Items.Any(Function(item)
+                                       Return item.IsLit
+                                   End Function) Then
+                LightLevel += 1
+            End If
         End Get
     End Property
     ReadOnly Property IsLit As Boolean
