@@ -77,4 +77,9 @@ Public Class Location
                                                 End Function)
         End Get
     End Property
+    ReadOnly Property IsLit As Boolean
+        Get
+            Return LightLevel > 0
+        End Get
+    End Property
 End Class

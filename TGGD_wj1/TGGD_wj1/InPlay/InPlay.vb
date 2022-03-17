@@ -23,21 +23,25 @@ Module InPlay
                 Throw New NotImplementedException
         End Select
     End Function
-    Private Function CreatePrompt(character As Character) As IPrompt(Of String)
+    Private Function CreatePrompt(character As Character, canSee As Boolean) As IPrompt(Of String)
         Dim result As New SelectionPrompt(Of String)() With
                 {
                     .Title = "What Next?"
                 }
         result.AddChoices("Move...")
         result.AddChoices("Turn...")
-        If character.Location.Features.Any Then
-            result.AddChoice("Interact...")
-        End If
-        If Not character.Location.Inventory.IsEmpty Then
-            result.AddChoice("Ground...")
-        End If
         If Not character.Inventory.IsEmpty Then
             result.AddChoice("Inventory...")
+        End If
+        If canSee Then
+            If character.Location.Features.Any Then
+                result.AddChoice("Interact...")
+            End If
+            If Not character.Location.Inventory.IsEmpty Then
+                result.AddChoice("Ground...")
+            End If
+        Else
+            result.AddChoice("Search area")
         End If
         result.AddChoices("Menu...")
         Return result
@@ -45,23 +49,29 @@ Module InPlay
     Sub Run()
         Dim done = False
         Dim character As New PlayerCharacter()
+        Dim searchedLocation As Location = Nothing
         While Not done
             Dim location = character.Location
             AnsiConsole.WriteLine()
-            AnsiConsole.MarkupLine($"Here: {location.LocationType.Name}")
-            If location.Decay.HasValue Then
-                AnsiConsole.MarkupLine($"Decay: {location.Decay.Value}%")
+            Dim canSee = location.IsLit OrElse (searchedLocation IsNot Nothing AndAlso searchedLocation.Id = location.Id)
+            If canSee Then
+                AnsiConsole.MarkupLine($"Here: {location.LocationType.Name}")
+                If location.Decay.HasValue Then
+                    AnsiConsole.MarkupLine($"Decay: {location.Decay.Value}%")
+                End If
+                Dim features = location.Features
+                If features.Any Then
+                    AnsiConsole.MarkupLine($"[teal]Features: {String.Join(",", features.Select(Of String)(Function(feature) feature.FeatureType.Name))}[/]")
+                End If
+                If Not location.Inventory.IsEmpty Then
+                    AnsiConsole.MarkupLine("There is stuff on the ground.")
+                End If
+                Dim aheadLocation = character.GetNextLocation(MoveDirection.Ahead)
+                AnsiConsole.MarkupLine($"Ahead: {aheadLocation.LocationType.Name}")
+            Else
+                AnsiConsole.MarkupLine("It is too dark to see anything.")
             End If
-            Dim features = location.Features
-            If features.Any Then
-                AnsiConsole.MarkupLine($"[teal]Features: {String.Join(",", features.Select(Of String)(Function(feature) feature.FeatureType.Name))}[/]")
-            End If
-            If Not location.Inventory.IsEmpty Then
-                AnsiConsole.MarkupLine("There is stuff on the ground.")
-            End If
-            Dim aheadLocation = character.GetNextLocation(MoveDirection.Ahead)
-            AnsiConsole.MarkupLine($"Ahead: {aheadLocation.LocationType.Name}")
-            Select Case AnsiConsole.Prompt(CreatePrompt(character))
+            Select Case AnsiConsole.Prompt(CreatePrompt(character, canSee))
                 Case "Menu..."
                     done = HandleGameMenu()
                     If done Then
@@ -76,6 +86,9 @@ Module InPlay
                     GroundMenu.Run(character)
                 Case "Move..."
                     MoveMenu.Run(character)
+                Case "Search area"
+                    searchedLocation = location
+                    Game.Update()
                 Case "Interact..."
                     InteractMenu.Run(character)
                     If character.DidWin Then
