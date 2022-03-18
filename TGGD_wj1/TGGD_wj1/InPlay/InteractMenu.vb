@@ -31,10 +31,21 @@ Module InteractMenu
                 GoDownStairs(character)
             Case FeatureType.BuildingExit
                 HandleBuildingExit(character, feature)
+            Case FeatureType.Rubble
+                HandleRubblePile(character, feature)
             Case Else
                 Throw New NotImplementedException
         End Select
     End Sub
+
+    Private Sub HandleRubblePile(character As PlayerCharacter, feature As Feature)
+        If feature.Inventory.IsEmpty Then
+            Throw New NotImplementedException
+        Else
+            Throw New NotImplementedException
+        End If
+    End Sub
+
     Sub Run(character As PlayerCharacter)
         Dim prompt As New SelectionPrompt(Of String)() With
             {

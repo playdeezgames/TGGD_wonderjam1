@@ -33,4 +33,9 @@
             MakeParameter("@LocationId", locationId),
             MakeParameter("@InventoryId", inventoryId))
     End Sub
+
+    Friend Sub ClearForLocation(locationId As Long)
+        Initialize()
+        ExecuteNonQuery("DELETE FROM [LocationInventories] WHERE [LocationId]=@LocationId;", MakeParameter("@LocationId", locationId))
+    End Sub
 End Module

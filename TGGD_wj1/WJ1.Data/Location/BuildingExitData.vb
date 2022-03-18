@@ -26,4 +26,9 @@
         End If
         Return Nothing
     End Function
+
+    Sub Clear(featureId As Long)
+        Initialize()
+        ExecuteNonQuery("DELETE FROM [BuildingExits] WHERE [FeatureId]=@FeatureId;", MakeParameter("@FeatureId", featureId))
+    End Sub
 End Module

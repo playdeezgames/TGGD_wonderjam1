@@ -28,4 +28,19 @@ Public Class Feature
                 Throw New NotImplementedException
         End Select
     End Sub
+    ReadOnly Property Inventory As Inventory
+        Get
+            Select Case FeatureType
+                Case FeatureType.Rubble
+                    Dim inventoryId = RubbleInventoryData.Read(Id)
+                    If Not inventoryId.HasValue Then
+                        inventoryId = InventoryData.Create()
+                        RubbleInventoryData.Write(Id, inventoryId.Value)
+                    End If
+                    Return New Inventory(inventoryId.Value)
+                Case Else
+                    Return Nothing
+            End Select
+        End Get
+    End Property
 End Class

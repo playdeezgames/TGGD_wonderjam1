@@ -32,4 +32,9 @@
             End Using
         End Using
     End Function
+
+    Friend Sub Clear(locationId As Long)
+        Initialize()
+        ExecuteNonQuery("DELETE FROM [LocationDecay] WHERE [LocationId]=@LocationId;", MakeParameter("@LocationId", locationId))
+    End Sub
 End Module

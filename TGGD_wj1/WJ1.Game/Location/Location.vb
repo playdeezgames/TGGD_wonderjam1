@@ -13,10 +13,15 @@ Public Class Location
             LocationData.WriteLocationType(Id, value)
         End Set
     End Property
-    ReadOnly Property Decay As Long?
+    Property Decay As Long?
         Get
             Return LocationDecayData.Read(Id)
         End Get
+        Set(value As Long?)
+            If value.HasValue Then
+                LocationDecayData.Write(Id, value.Value)
+            End If
+        End Set
     End Property
     Function GetNeighbor(direction As Direction) As Location
         Dim z = LocationData.ReadZ(Id).Value
@@ -100,4 +105,7 @@ Public Class Location
             Return LightLevel > 0
         End Get
     End Property
+    Sub Destroy()
+        LocationData.Clear(Id)
+    End Sub
 End Class

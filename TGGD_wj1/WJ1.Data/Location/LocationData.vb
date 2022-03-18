@@ -77,4 +77,13 @@
             MakeParameter("@Y", y),
             MakeParameter("@Z", z))
     End Function
+    Sub Clear(locationId As Long)
+        Initialize()
+        LocationDecayData.Clear(locationId)
+        FeatureData.ClearForLocation(locationId)
+        LocationInventoryData.ClearForLocation(locationId)
+        ExecuteNonQuery(
+            "DELETE FROM [Locations] WHERE [LocationId]=@LocationId;",
+            MakeParameter("@LocationId", locationId))
+    End Sub
 End Module

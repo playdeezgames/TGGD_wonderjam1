@@ -91,6 +91,7 @@ Public Module Game
     End Sub
     Private Sub CreatePlayerCharacter()
         Dim locationId = RNG.FromList(LocationData.ReadForZAndLocationType(PlayerZ, LocationType.Floor))
+        'Dim locationId = RNG.FromList(LocationData.ReadForZAndLocationType(2, LocationType.Floor))
         Dim direction = RNG.FromList(AllDirections)
         Dim characterId = CharacterData.Create(CharacterType.Player, locationId, direction)
         PlayerData.Write(characterId, False)
@@ -107,8 +108,9 @@ Public Module Game
         location.Inventory.Add(item)
     End Sub
     Private Sub StartDecay()
-        Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(BuildingZSize, LocationType.Floor)))
-        LocationDecayData.Write(location.Id, 1)
+        'Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(BuildingZSize, LocationType.Floor)))
+        Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(2, LocationType.Floor)))
+        LocationDecayData.Write(Location.Id, 1)
     End Sub
     Private Sub CreateBatteries()
         Dim batteryIds As New List(Of Long)
@@ -141,11 +143,19 @@ Public Module Game
             Dim location As New Location(locationId)
             Dim below = location.Below
             below.LocationType = LocationType.Floor
-            'a heap of rubble appears on the floor below
+            Dim feature As New Feature(FeatureData.Create(below.Id, FeatureType.Rubble))
+            If Not below.Decay.HasValue Then
+                below.Decay = 1
+            End If
             For Each item In location.Inventory.Items
-                'add item to rubble heap
+                feature.Inventory.Add(item)
             Next
-            'the location is removed from the game
+            For Each neighbor In location.Neighbors.Where(Function(l) l IsNot Nothing AndAlso l.LocationType = LocationType.Floor)
+                If Not neighbor.Decay.HasValue Then
+                    neighbor.Decay = 1
+                End If
+            Next
+            location.Destroy()
         End If
     End Sub
     Private Sub UpdateDecay()
@@ -154,8 +164,9 @@ Public Module Game
             Dim decay = LocationDecayData.Read(locationId).Value
             If RNG.FromRange(1, 100) < decay Then
                 RotFloor(locationId)
+            Else
+                LocationDecayData.Write(locationId, decay + 1)
             End If
-            LocationDecayData.Write(locationId, decay + 1)
         Next
     End Sub
     Private Sub DrainBatteries()

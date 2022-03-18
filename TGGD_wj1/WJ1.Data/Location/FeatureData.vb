@@ -37,4 +37,18 @@
             MakeParameter("@FeatureType", featureType))
         Return LastInsertRowId
     End Function
+    Sub Clear(featureId As Long)
+        Initialize()
+        BuildingExitData.Clear(featureId)
+        RubbleInventoryData.Clear(featureId)
+        ExecuteNonQuery(
+            "DELETE FROM [Features] WHERE [FeatureId]=@FeatureId;",
+            MakeParameter("@FeatureId", featureId))
+    End Sub
+    Sub ClearForLocation(locationId As Long)
+        Dim featureIds = ReadForLocationId(locationId)
+        For Each featureId In featureIds
+            Clear(featureId)
+        Next
+    End Sub
 End Module
