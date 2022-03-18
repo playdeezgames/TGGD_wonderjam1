@@ -2,6 +2,5 @@
 A game in VB.NET about building, decay, and light.
 
 - decay
-	- finish this!
-- rubble pile
-	- inventory of rubble pile
+	- attempting to move into an empty location?
+	- when the floor beneath yer feet collapses

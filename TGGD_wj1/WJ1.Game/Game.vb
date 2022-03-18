@@ -147,6 +147,11 @@ Public Module Game
             If Not below.Decay.HasValue Then
                 below.Decay = 1
             End If
+            For Each rubblePile In location.Features.Where(Function(f) f.FeatureType = FeatureType.Rubble)
+                For Each item In rubblePile.Inventory.Items
+                    feature.Inventory.Add(item)
+                Next
+            Next
             For Each item In location.Inventory.Items
                 feature.Inventory.Add(item)
             Next
