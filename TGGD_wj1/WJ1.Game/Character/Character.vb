@@ -36,8 +36,14 @@ Public Class Character
         End If
     End Sub
     Function CanMove(moveDirection As MoveDirection) As Boolean
-        Return GetNextLocation(moveDirection).LocationType = LocationType.Floor
+        Dim nextLocation = GetNextLocation(moveDirection)
+        Return nextLocation IsNot Nothing AndAlso nextLocation.LocationType = LocationType.Floor
     End Function
+    ReadOnly Property MayMove As Boolean
+        Get
+            Return CanMove(MoveDirection.Ahead) OrElse CanMove(MoveDirection.Back) OrElse CanMove(MoveDirection.Left) OrElse CanMove(MoveDirection.Right)
+        End Get
+    End Property
     ReadOnly Property Inventory As Inventory
         Get
             Dim inventoryId = CharacterInventoryData.Read(Id)

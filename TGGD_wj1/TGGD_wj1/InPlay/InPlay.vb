@@ -28,7 +28,11 @@ Module InPlay
                 {
                     .Title = "What Next?"
                 }
-        result.AddChoices("Move...")
+        If character.MayMove Then
+            result.AddChoices("Move...")
+        Else
+            result.AddChoice("Wait")
+        End If
         result.AddChoices("Turn...")
         If Not character.Inventory.IsEmpty Then
             result.AddChoice("Inventory...")
@@ -86,6 +90,9 @@ Module InPlay
                     GroundMenu.Run(character)
                 Case "Move..."
                     MoveMenu.Run(character)
+                Case "Wait"
+                    AnsiConsole.MarkupLine("You wait a moment.")
+                    Game.Update()
                 Case "Search area"
                     searchedLocation = location
                     Game.Update()

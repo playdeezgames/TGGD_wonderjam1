@@ -90,8 +90,8 @@ Public Module Game
         CreateEntrance()
     End Sub
     Private Sub CreatePlayerCharacter()
-        Dim locationId = RNG.FromList(LocationData.ReadForZAndLocationType(PlayerZ, LocationType.Floor))
-        'Dim locationId = RNG.FromList(LocationData.ReadForZAndLocationType(2, LocationType.Floor))
+        'Dim locationId = RNG.FromList(LocationData.ReadForZAndLocationType(PlayerZ, LocationType.Floor))
+        Dim locationId = RNG.FromList(LocationData.ReadForZAndLocationType(2, LocationType.Floor))
         Dim direction = RNG.FromList(AllDirections)
         Dim characterId = CharacterData.Create(CharacterType.Player, locationId, direction)
         PlayerData.Write(characterId, False)
@@ -108,8 +108,7 @@ Public Module Game
         location.Inventory.Add(item)
     End Sub
     Private Sub StartDecay()
-        'Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(BuildingZSize, LocationType.Floor)))
-        Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(2, LocationType.Floor)))
+        Dim location = New Location(RNG.FromList(LocationData.ReadForZAndLocationType(BuildingZSize, LocationType.Floor)))
         LocationDecayData.Write(Location.Id, 1)
     End Sub
     Private Sub CreateBatteries()
@@ -151,6 +150,9 @@ Public Module Game
                 For Each item In rubblePile.Inventory.Items
                     feature.Inventory.Add(item)
                 Next
+            Next
+            For Each character In location.Characters
+                character.Location = below
             Next
             For Each item In location.Inventory.Items
                 feature.Inventory.Add(item)
