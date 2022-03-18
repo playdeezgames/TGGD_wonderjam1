@@ -90,8 +90,7 @@ Public Module Game
         CreateEntrance()
     End Sub
     Private Sub CreatePlayerCharacter()
-        'Dim locationId = RNG.FromList(LocationData.ReadForZAndLocationType(PlayerZ, LocationType.Floor))
-        Dim locationId = RNG.FromList(LocationData.ReadForZAndLocationType(2, LocationType.Floor))
+        Dim locationId = RNG.FromList(LocationData.ReadForZAndLocationType(PlayerZ, LocationType.Floor))
         Dim direction = RNG.FromList(AllDirections)
         Dim characterId = CharacterData.Create(CharacterType.Player, locationId, direction)
         PlayerData.Write(characterId, False)
