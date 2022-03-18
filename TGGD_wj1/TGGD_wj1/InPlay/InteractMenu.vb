@@ -40,9 +40,9 @@ Module InteractMenu
 
     Private Sub HandleRubblePile(character As PlayerCharacter, feature As Feature)
         If feature.Inventory.IsEmpty Then
-            Throw New NotImplementedException
+            AnsiConsole.MarkupLine("You don't find anything of use.")
         Else
-            Throw New NotImplementedException
+            RubbleMenu.Run(character, feature)
         End If
     End Sub
 
