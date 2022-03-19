@@ -71,7 +71,11 @@ Module InPlay
                     AnsiConsole.MarkupLine("There is stuff on the ground.")
                 End If
                 Dim aheadLocation = character.GetNextLocation(MoveDirection.Ahead)
-                AnsiConsole.MarkupLine($"Ahead: {aheadLocation.LocationType.Name}")
+                If aheadLocation IsNot Nothing Then
+                    AnsiConsole.MarkupLine($"Ahead: {aheadLocation.LocationType.Name}")
+                Else
+                    AnsiConsole.MarkupLine($"Ahead: a gaping emptiness.")
+                End If
             Else
                 AnsiConsole.MarkupLine("It is too dark to see anything.")
             End If

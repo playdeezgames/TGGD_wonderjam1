@@ -2,7 +2,7 @@ Imports WJ1.Data
 Public Module Game
     Const BuildingXSize As Long = 7
     Const BuildingYSize As Long = 7
-    Const BuildingZSize As Long = 7
+    Const BuildingZSize As Long = 3
     Const GroundZ As Long = 1
     Const PlayerZ As Long = 1
     Const KeyZ As Long = BuildingZSize
